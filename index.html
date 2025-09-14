@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Tiruvannamalai Real Estate</title>
+  <meta name="description" content="Real estate listings and contact for Tiruvannamalai." />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='0.9em' font-size='90'%3E🏠%3C/text%3E%3C/svg%3E" />
+  <style>
+    :root{
+      --bg:#0b1020; --card:#12172a; --muted:#99a0b0; --text:#eef1f8; --brand:#4cc9f0; --accent:#80ed99;
+      --shadow:0 10px 30px rgba(0,0,0,.35);
+    }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,"Noto Sans",sans-serif; background:linear-gradient(120deg,#0b1020,#0e1836 60%,#192647); color:var(--text)}
+    header{position:sticky;top:0;z-index:20;background:rgba(18,23,42,.7);backdrop-filter:blur(8px);border-bottom:1px solid rgba(255,255,255,.08)}
+    .wrap{max-width:1100px;margin:0 auto;padding:16px}
+    .row{display:flex;gap:12px;align-items:center;justify-content:space-between}
+    .brand{display:flex;gap:10px;align-items:center;font-weight:800;letter-spacing:.3px}
+    .brand .logo{width:40px;height:40px;display:grid;place-items:center;border-radius:10px;background:linear-gradient(135deg,var(--brand),#bde0fe);box-shadow:var(--shadow)}
+    nav a{color:var(--text);text-decoration:none;margin:0 10px;opacity:.9}
+    nav a:hover{opacity:1}
+    .lang{appearance:none;background:var(--card);color:var(--text);border:1px solid rgba(255,255,255,.12);padding:10px 12px;border-radius:12px}
+
+    .hero{padding:48px 0 24px}
+    .hero h1{font-size:clamp(28px,4vw,40px);margin:8px 0}
+    .hero p{color:var(--muted);font-size:clamp(14px,2.2vw,16px)}
+    .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;margin:22px 0 8px}
+    .card{background:var(--card);border:1px solid rgba(255,255,255,.08);border-radius:18px;overflow:hidden;box-shadow:var(--shadow)}
+    .img{aspect-ratio:16/10;background:#1c2440 url('https://picsum.photos/640/400?blur=2') center/cover}
+    .pad{padding:14px}
+    .tag{display:inline-block;background:rgba(128,237,153,.12);color:var(--accent);padding:4px 10px;border-radius:999px;font-size:12px;border:1px solid rgba(128,237,153,.35)}
+    .price{font-weight:800;margin:6px 0 2px}
+    .muted{color:var(--muted);font-size:14px}
+    .btn{display:inline-block;padding:10px 12px;border-radius:12px;border:1px solid rgba(255,255,255,.14);text-decoration:none;color:var(--text);transition:.2s ease;cursor:pointer}
+    .btn:hover{transform:translateY(-1px);border-color:var(--brand)}
+
+    section{padding:16px 0}
+    .about,.contact{display:grid;grid-template-columns:1.1fr .9fr;gap:18px}
+    @media (max-width:800px){.about,.contact{grid-template-columns:1fr}}
+    .panel{background:var(--card);border:1px solid rgba(255,255,255,.08);border-radius:18px;padding:16px;box-shadow:var(--shadow)}
+    .kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:6px}
+    .kpi{background:rgba(76,201,240,.08);border:1px solid rgba(76,201,240,.25);border-radius:14px;padding:12px;text-align:center}
+
+    footer{margin:24px 0 60px;color:var(--muted);text-align:center}
+
+    .floating{position:fixed;right:16px;bottom:16px;display:flex;flex-direction:column;gap:10px}
+    .fab{display:flex;align-items:center;gap:10px;padding:12px 14px;border-radius:18px;background:var(--brand);color:#06131d;text-decoration:none;font-weight:700;box-shadow:var(--shadow)}
+    .fab.wh{background:#25D366;color:#041e10}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap row">
+      <div class="brand">
+        <div class="logo">🏠</div>
+        <div>
+          <div id="bizName">Your Business Name</div>
+          <small id="tagline" class="muted">Your Trusted Real Estate Partner in Tiruvannamalai</small>
+        </div>
+      </div>
+      <nav>
+        <a href="#home" data-i18n="nav.home">Home</a>
+        <a href="#properties" data-i18n="nav.properties">Properties</a>
+        <a href="#about" data-i18n="nav.about">About</a>
+        <a href="#contact" data-i18n="nav.contact">Contact</a>
+      </nav>
+      <select id="lang" class="lang" aria-label="Language">
+        <option value="en">English</option>
+        <option value="ta">தமிழ்</option>
+        <option value="te">తెలుగు</option>
+        <option value="hi">हिन्दी</option>
+        <option value="kn">ಕನ್ನಡ</option>
+      </select>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section id="home" class="hero">
+      <h1 data-i18n="hero.title">Properties for Sale in Tiruvannamalai</h1>
+      <p data-i18n="hero.subtitle">DTCP approved plots, houses and commercial spaces. Call or WhatsApp us for site visits.</p>
+    </section>
+
+    <section id="properties">
+      <h2 data-i18n="section.properties">Featured Properties</h2>
+      <div id="cards" class="cards"></div>
+    </section>
+
+    <section id="about" class="about">
+      <div class="panel">
+        <h2 data-i18n="section.about">About Us</h2>
+        <p data-i18n="about.text">We are a local real estate agency in Tiruvannamalai. We deal in DTCP approved plots, residential houses and commercial spaces with clear titles. Our team provides end‑to‑end support including site visits and registration guidance.</p>
+        <div class="kpis">
+          <div class="kpi"><div style="font-weight:800">1000+</div><div class="muted" data-i18n="kpi.clients">Happy Clients</div></div>
+          <div class="kpi"><div style="font-weight:800">10+</div><div class="muted" data-i18n="kpi.years">Years Experience</div></div>
+          <div class="kpi"><div style="font-weight:800">50+</div><div class="muted" data-i18n="kpi.projects">Projects Closed</div></div>
+        </div>
+      </div>
+      <div class="panel">
+        <h3 data-i18n="about.addressHeading">Business Details</h3>
+        <p><strong data-i18n="labels.name">Name</strong>: <span id="bizNameInline">Your Business Name</span></p>
+        <p><strong data-i18n="labels.address">Address</strong>: <span id="bizAddress">Door No. XX, Street Name, Tiruvannamalai, Tamil Nadu 606601</span></p>
+        <p><strong data-i18n="labels.contact">Contact</strong>: <a id="bizPhone" class="btn" href="tel:+91XXXXXXXXXX">+91XXXXXXXXXX</a></p>
+      </div>
+    </section>
+
+    <section id="contact" class="contact">
+      <div class="panel">
+        <h2 data-i18n="section.contact">Contact Us</h2>
+        <p class="muted" data-i18n="contact.note">Click WhatsApp for quick reply, or call for immediate assistance.</p>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;margin:8px 0 14px">
+          <a id="waBtn" class="btn" href="#" target="_blank">WhatsApp</a>
+          <a id="callBtn" class="btn" href="#">Call</a>
+        </div>
+        <div>
+          <h4 data-i18n="contact.map">Office Location (Map)</h4>
+          <div style="border-radius:14px;overflow:hidden;border:1px solid rgba(255,255,255,.1)">
+            <iframe id="map" src="https://www.google.com/maps?q=Tiruvannamalai&z=14&output=embed" width="100%" height="280" style="border:0" loading="lazy" allowfullscreen referrerpolicy="no-referrer-when-downgrade"></iframe>
+          </div>
+        </div>
+      </div>
+      <div class="panel">
+        <h3 data-i18n="contact.direct">Direct Contacts</h3>
+        <p><strong data-i18n="labels.phone">Phone</strong>: <a id="phoneLink" href="tel:+91XXXXXXXXXX">+91XXXXXXXXXX</a></p>
+        <p><strong data-i18n="labels.whatsapp">WhatsApp</strong>: <a id="waLink" href="#" target="_blank">chat</a></p>
+        <p><strong>Email</strong>: <a id="emailLink" href="mailto:you@example.com">you@example.com</a></p>
+      </div>
+    </section>
+
+    <footer>
+      <div>© <span id="year"></span> <span id="bizNameFoot">Your Business Name</span>. <span data-i18n="footer.rights">All rights reserved.</span></div>
+    </footer>
+  </main>
+
+  <div class="floating">
+    <a id="fabCall" class="fab" href="#">📞 <span data-i18n="cta.call">Call</span></a>
+    <a id="fabWa" class="fab wh" href="#" target="_blank">💬 WhatsApp</a>
+  </div>
+
+  <script>
+    // ---- CONFIG: Edit these with your real details ----
+    const CONFIG = {
+      defaultLang: 'en',
+      business: {
+        // Your business names in each language
+        en: 'Your Business Name',
+        ta: 'உங்கள் வணிகப் பெயர்',
+        te: 'మీ వ్యాపార పేరు',
+        hi: 'आपके व्यवसाय का नाम',
+        kn: 'ನಿಮ್ಮ ವ್ಯವಹಾರದ ಹೆಸರು'
+      },
+      address: {
+        en: 'Door No. XX, Street Name, Tiruvannamalai, Tamil Nadu 606601',
+        ta: 'வீட்டு எண் XX, தெருப் பெயர், திருவண்ணாமலை, தமிழ்நாடு 606601',
+        te: 'డోర్ నెం. XX, వీధి పేరు, తిరువన్నామలై, తమిళనాడు 606601',
+        hi: 'द्वार संख्या XX, सड़क नाम, तिरुवन्नामलाई, तमिलनाडु 606601',
+        kn: 'ಬಾಗಿಲು ಸಂಖ್ಯೆ XX, ಬೀದಿ ಹೆಸರು, ತಿರುವಣ್ಣಾಮಲೈ, ತಮಿಳುನಾಡು 606601'
+      },
+      name:'G.Narayan',
+      phone: '+919177786555', // replace with your phone
+      whatsapp: '91XXXXXXXXXX', // numbers only with country code
+      email: 'you@example.com',
+      mapQuery: 'Tiruvannamalai'
+    };
+
+    // ---- Sample properties (edit or replace) ----
+    const properties = [
+      {
+        id: 'P-101', type: 'plot', title: 'DTCP Approved Plot near Girivalam Road',
+        priceLakh: 7.5, area: '1200 sq.ft', location: 'Near Girivalam Road, Tiruvannamalai',
+        img: 'https://picsum.photos/id/1025/640/400'
+      },
+      {
+        id: 'H-203', type: 'house', title: '2BHK House on Polur Road',
+        priceLakh: 38, area: '900 sq.ft', location: 'Polur Road, Tiruvannamalai',
+        img: 'https://picsum.photos/id/1018/640/400'
+      },
+      {
+        id: 'C-077', type: 'shop', title: 'Commercial Shop Space – Town Center',
+        priceLakh: 25, area: '300 sq.ft', location: 'Tiruvoodal Street, Tiruvannamalai',
+        img: 'https://picsum.photos/id/1062/640/400'
+      }
+    ];
+
+    // ---- Translations (UI strings) ----
+    const i18n = {
+      en: {
+        nav:{home:'Home',properties:'Properties',about:'About',contact:'Contact'},
+        hero:{title:'Properties for Sale in Tiruvannamalai',subtitle:'DTCP approved plots, houses and commercial spaces. Call or WhatsApp us for site visits.'},
+        section:{properties:'Featured Properties',about:'About Us',contact:'Contact Us'},
+        about:{text:'We are a local real estate agency in Tiruvannamalai. We deal in DTCP approved plots, residential houses and commercial spaces with clear titles. Our team provides end‑to‑end support including site visits and registration guidance.',addressHeading:'Business Details'},
+        kpi:{clients:'Happy Clients',years:'Years Experience',projects:'Projects Closed'},
+        labels:{name:'Name',address:'Address',contact:'Contact',phone:'Phone',whatsapp:'WhatsApp',price:'Price',location:'Location',area:'Area'},
+        types:{plot:'Plot',house:'House',shop:'Commercial'},
+        cta:{view:'View Details',call:'Call'},
+        contact:{note:'Click WhatsApp for quick reply, or call for immediate assistance.',map:'Office Location (Map)',direct:'Direct Contacts'},
+        footer:{rights:'All rights reserved.'}
+      },
+      ta: {
+        nav:{home:'முகப்பு',properties:'சொத்துகள்',about:'எங்களைப் பற்றி',contact:'தொடர்பு'},
+        hero:{title:'திருவண்ணாமலை பகுதியில் விற்பனைக்கு சொத்துகள்',subtitle:'DTCP ஒப்புதலுடன் நிலங்கள், வீடுகள், வணிக இடங்கள். தள பார்வைக்கு அழையுங்கள் அல்லது வாட்ஸ்அப் செய்யுங்கள்.'},
+        section:{properties:'சிறப்பு சொத்துகள்',about:'எங்களைப் பற்றி',contact:'தொடர்புக்கு'},
+        about:{text:'நாங்கள் திருவண்ணாமலை பகுதியில் உள்ள உள்ளூர் ரியல் எஸ்டேட் நிறுவனம். DTCP ஒப்புதலுடன் நிலங்கள், வீடுகள் மற்றும் வணிக இடங்களை தெளிவான ஆவணங்களுடன் விற்பனை செய்கிறோம். தள பார்வை முதல் பதிவு வரை முழு உதவியும் வழங்குகிறோம்.',addressHeading:'நிறுவன விவரங்கள்'},
+        kpi:{clients:'மகிழ்ச்சியான வாடிக்கையாளர்கள்',years:'ஆண்டுகள் அனுபவம்',projects:'மூடப்பட்ட திட்டங்கள்'},
+        labels:{name:'பெயர்',address:'முகவரி',contact:'தொடர்பு',phone:'தொலைபேசி',whatsapp:'வாட்ஸ்அப்',price:'விலை',location:'இடம்',area:'பரப்பு'},
+        types:{plot:'நிலம்',house:'வீடு',shop:'வணிகம்'},
+        cta:{view:'விவரம்',call:'அழை'},
+        contact:{note:'விரைவான பதிலுக்கு வாட்ஸ்அப் செய்யவும், உடனடி உதவிக்கு அழைக்கவும்.',map:'அலுவலக இடம் (வரைபடம்)',direct:'நேரடி தொடர்புகள்'},
+        footer:{rights:'அனைத்து உரிமைகளும் பாதுகாக்கப்பட்டவை.'}
+      },
+      te: {
+        nav:{home:'హోమ్',properties:'ప్రాపర్టీలు',about:'మన గురించి',contact:'సంప్రదించండి'},
+        hero:{title:'తిరువన్నామలైలో అమ్మకానికి ప్రాపర్టీలు',subtitle:'DTCP ఆమోదిత ప్లాట్లు, హౌసులు మరియు కమర్షియల్ స్పేస్. సైట్ విజిట్ కోసం కాల్ లేదా వాట్సాప్ చేయండి.'},
+        section:{properties:'ప్రత్యేక ప్రాపర్టీలు',about:'మన గురించి',contact:'కాంటాక్ట్'},
+        about:{text:'మేము తిరువన్నామలైలో స్థానిక రియల్ ఎస్టేట్ సంస్థ. DTCP ఆమోదిత ప్లాట్లు, నివాస గృహాలు, కమర్షియల్ స్పేస్ — స్పష్టం అయిన డాక్యుమెంట్లు. సైట్ విజిట్ నుండి రిజిస్ట్రేషన్ వరకు పూర్తి సహాయం అందిస్తాము.',addressHeading:'వ్యాపార వివరాలు'},
+        kpi:{clients:'సంతోషకర కస్టమర్లు',years:'ఏళ్ల అనుభవం',projects:'పూర్తయిన ప్రాజెక్టులు'},
+        labels:{name:'పేరు',address:'చిరునామా',contact:'సంప్రదింపు',phone:'ఫోన్',whatsapp:'వాట్సాప్',price:'ధర',location:'ప్రాంతం',area:'విస్తీర్ణం'},
+        types:{plot:'భూమి',house:'ఇంటి',shop:'వాణిజ్య'},
+        cta:{view:'వివరాలు',call:'కాల్'},
+        contact:{note:'త్వరిత సమాధానానికి వాట్సాప్ చేయండి, తక్షణ సహాయానికి కాల్ చేయండి.',map:'ఆఫీస్ లొకేషన్ (మ్యాప్)',direct:'నేరుగా సంప్రదించండి'},
+        footer:{rights:'అన్ని హక్కులు రిజర్వ్ కలిగి ఉన్నాయి.'}
+      },
+      hi: {
+        nav:{home:'होम',properties:'प्रॉपर्टीज़',about:'हमारे बारे में',contact:'संपर्क'},
+        hero:{title:'तिरुवन्नामलाई में बिक्री के लिए प्रॉपर्टीज़',subtitle:'DTCP मान्य प्लॉट, घर और वाणिज्यिक स्थान। साइट विज़िट के लिए कॉल या व्हाट्सऐप करें।'},
+        section:{properties:'चुनी हुई प्रॉपर्टीज़',about:'हमारे बारे में',contact:'संपर्क करें'},
+        about:{text:'हम तिरुवन्नामलाई की स्थानीय रियल एस्टेट एजेंसी हैं। DTCP मान्य प्लॉट, आवासीय घर और वाणिज्यिक स्थान, स्पष्ट टाइटल के साथ। साइट विज़िट से लेकर रजिस्ट्रेशन तक पूरी सहायता प्रदान करते हैं।',addressHeading:'व्यवसाय विवरण'},
+        kpi:{clients:'खुश ग्राहक',years:'वर्षों का अनुभव',projects:'पूरे किए प्रोजेक्ट'},
+        labels:{name:'नाम',address:'पता',contact:'संपर्क',phone:'फ़ोन',whatsapp:'व्हाट्सऐप',price:'कीमत',location:'स्थान',area:'क्षेत्र'},
+        types:{plot:'प्लॉट',house:'मकान',shop:'वाणिज्यिक'},
+        cta:{view:'विवरण',call:'कॉल'},
+        contact:{note:'जल्दी जवाब के लिए व्हाट्सऐप करें, तुरंत सहायता के लिए कॉल करें।',map:'ऑफिस लोकेशन (मैप)',direct:'प्रत्यक्ष संपर्क'},
+        footer:{rights:'सर्वाधिकार सुरक्षित.'}
+      },
+      kn: {
+        nav:{home:'ಮುಖಪುಟ',properties:'ಆಸ್ತಿಗಳು',about:'ನಮ್ಮ ಬಗ್ಗೆ',contact:'ಸಂಪರ್ಕ'},
+        hero:{title:'ತಿರುವಣ್ಣಾಮಲೈನಲ್ಲಿ ಮಾರಾಟಕ್ಕೆ ಆಸ್ತಿಗಳು',subtitle:'DTCP ಮಾನ್ಯ ಪ್ಲಾಟ್ಸ್, ಮನೆಗಳು ಮತ್ತು ವಾಣಿಜ್ಯ ಸ್ಥಳಗಳು. ಸೈಟ್ ವಿಸಿಟ್‌ಗೆ ಕರೆ ಅಥವಾ ವಾಟ್ಸ್ಅ್ಯಾಪ್ ಮಾಡಿ.'},
+        section:{properties:'ಪ್ರಮುಖ ಆಸ್ತಿಗಳು',about:'ನಮ್ಮ ಬಗ್ಗೆ',contact:'ಸಂಪರ್ಕಿಸಿ'},
+        about:{text:'ನಾವು ತಿರುವಣ್ಣಾಮಲೈನ ಸ್ಥಳೀಯ ರಿಯಲ್ ಎಸ್ಟೇಟ್ ಏಜೆನ್ಸಿ. DTCP ಮಾನ್ಯ ಪ್ಲಾಟ್ಸ್, ನಿವಾಸ ಮನೆಗಳು ಮತ್ತು ವಾಣಿಜ್ಯ ಸ್ಥಳಗಳು — ಸ್ಪಷ್ಟ ದಾಖಲೆಗಳೊಂದಿಗೆ. ಸೈಟ್ ವೀಕ್ಷಣೆಿನಿಂದ ನೋಂದಣಿ ವರೆಗೆ ಸಂಪೂರ್ಣ ಸಹಾಯ.',addressHeading:'ವ್ಯಾಪಾರ ವಿವರಗಳು'},
+        kpi:{clients:'ಸಂತೃಪ್ತ ಗ್ರಾಹಕರು',years:'ವರ್ಷಗಳ ಅನುಭವ',projects:'ಪೂರ್ತಿಯಾದ ಯೋಜನೆಗಳು'},
+        labels:{name:'ಹೆಸರು',address:'ವಿಳಾಸ',contact:'ಸಂಪರ್ಕ',phone:'ಫೋನ್',whatsapp:'ವಾಟ್ಸ್ಅ್ಯಾಪ್',price:'ಬೆಲೆ',location:'ಸ್ಥಳ',area:'ವಿಸ್ತೀರ್ಣ'},
+        types:{plot:'ಜಮೀನು',house:'ಮನೆ',shop:'ವಾಣಿಜ್ಯ'},
+        cta:{view:'ವಿವರಗಳು',call:'ಕಾಲ್'},
+        contact:{note:'ವೇಗದ ಪ್ರತಿಕ್ರಿಯೆಗೆ ವಾಟ್ಸ್ಅ್ಯಾಪ್ ಮಾಡಿ, ತಕ್ಷಣದ ಸಹಾಯಕ್ಕೆ ಕರೆ ಮಾಡಿ.',map:'ಕಚೇರಿ ಸ್ಥಳ (ನಕ್ಷೆ)',direct:'ನೇರ ಸಂಪರ್ಕಗಳು'},
+        footer:{rights:'ಎಲ್ಲ ಹಕ್ಕುಗಳು ಕಾಯ್ದಿರಿಸಲಾಗಿದೆ.'}
+      }
+    };
+
+    // ---- Helpers ----
+    const $ = (sel) => document.querySelector(sel);
+    const fmtINR = (n) => new Intl.NumberFormat('en-IN', { maximumFractionDigits: 2 }).format(n);
+
+    function t(path){
+      const [ns,key] = path.split('.');
+      const dict = i18n[state.lang] || i18n.en;
+      return (dict[ns] && dict[ns][key]) || (i18n.en[ns] && i18n.en[ns][key]) || path;
+    }
+
+    const state = { lang: CONFIG.defaultLang };
+
+    function applyI18n(){
+      // Business name, tagline and address switch
+      $('#bizName').textContent = CONFIG.business[state.lang] || CONFIG.business.en;
+      $('#bizNameInline').textContent = CONFIG.business[state.lang] || CONFIG.business.en;
+      $('#bizNameFoot').textContent = CONFIG.business[state.lang] || CONFIG.business.en;
+      $('#bizAddress').textContent = CONFIG.address[state.lang] || CONFIG.address.en;
+
+      // Simple text nodes
+      document.querySelectorAll('[data-i18n]').forEach(el=>{
+        el.textContent = t(el.getAttribute('data-i18n'));
+      });
+    }
+
+    function renderProperties(){
+      const container = $('#cards');
+      container.innerHTML = '';
+      properties.forEach(p=>{
+        const div = document.createElement('div');
+        div.className = 'card';
+        div.innerHTML = `
+          <div class="img" style="background-image:url('${p.img}')"></div>
+          <div class="pad">
+            <span class="tag">${t('types.'+p.type)}</span>
+            <div class="price">₹ ${fmtINR(p.priceLakh)} Lakh</div>
+            <div>${p.title}</div>
+            <div class="muted">${t('labels.location')}: ${p.location} · ${t('labels.area')}: ${p.area}</div>
+            <div style="margin-top:8px;display:flex;gap:8px;flex-wrap:wrap">
+              <a class="btn" href="https://wa.me/${CONFIG.whatsapp}?text=I%20am%20interested%20in%20${encodeURIComponent(p.id)}" target="_blank">💬 ${t('cta.view')}</a>
+              <a class="btn" href="tel:${CONFIG.phone}">📞 ${t('cta.call')}</a>
+            </div>
+          </div>`;
+        container.appendChild(div);
+      });
+    }
+
+    function wireContacts(){
+      $('#year').textContent = new Date().getFullYear();
+      // Phone
+      $('#bizPhone').href = `tel:${CONFIG.phone}`;
+      $('#phoneLink').href = `tel:${CONFIG.phone}`;
+      $('#callBtn').href = `tel:${CONFIG.phone}`;
+      $('#fabCall').href = `tel:${CONFIG.phone}`;
+      // WhatsApp
+      const waURL = `https://wa.me/${CONFIG.whatsapp}?text=Hi%2C%20I%20am%20interested%20in%20your%20properties.`;
+      $('#waBtn').href = waURL; $('#waLink').href = waURL; $('#fabWa').href = waURL;
+      // Email
+      $('#emailLink').href = `mailto:${CONFIG.email}`;
+      // Map
+      $('#map').src = `https://www.google.com/maps?q=${encodeURIComponent(CONFIG.mapQuery)}&z=14&output=embed`;
+    }
+
+    function boot(){
+      // init
+      $('#lang').value = state.lang;
+      $('#lang').addEventListener('change', e=>{ state.lang = e.target.value; applyI18n(); });
+      applyI18n();
+      wireContacts();
+      renderProperties();
+    }
+
+    document.addEventListener('DOMContentLoaded', boot);
+  </script>
+</body>
+</html>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tiruvannamalai Real Estate</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      color :white;/* all text black */
+      margin: 0;
+      padding: 0;
+      background: #f9f9f9;
+    }
+    header {
+      background: #4CAF50;
+      color: blue;
+      padding: 15px;
+      text-align: center;
+    }
+    .language-selector {
+      margin: 20px;
+      text-align: center;
+    }
+    .content {
+      text-align: center;
+      margin-top: 30px;
+    }
+    .contact {
+      margin: 30px;
+      text-align: center;
+    }
+    .btn {
+      display: inline-block;
+      margin: 10px;
+      padding: 10px 20px;
+      background: #4CAF50;
+      color: rgb(255, 255, 255);
+      text-decoration: none;
+      border-radius: 5px;
+    }
+    .btn:hover {
+      background: #45a049;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1 id="title">Tiruvannamalai Real Estate</h1>
+  </header>
+
+  <div class="language-selector">
+    <label for="language">Choose Language:</label>
+    <select id="language">
+      <option value="en">English</option>
+      <option value="ta">தமிழ்</option>
+      <option value="te">తెలుగు</option>
+      <option value="hi">हिंदी</option>
+      <option value="kn">ಕನ್ನಡ</option>
+    </select>
+  </div>
+
+  <div class="content">
+    <h2 id="welcome">Welcome to Tiruvannamalai Real Estate</h2>
+    <p id="description">Best properties available for sale and rent.</p>
+  </div>
+
+  <div class="contact">
+    <h3 id="contact">Contact Us</h3>
+    <a href="tel:+919876543210" class="btn" id="call">📞 Call</a>
+    <a href="https://wa.me/919876543210" class="btn" id="whatsapp">💬 WhatsApp</a>
+    <a href="mailto:info@tiruvannamalai-realestate.com" class="btn" id="email">✉️ Email</a>
+  </div>
+
+  <script>
+    const translations = {
+      en: {
+        title: "Tiruvannamalai Real Estate",
+        welcome: "Welcome to Tiruvannamalai Real Estate",
+        description: "Best properties available for sale and rent.",
+        contact: "Contact Us",
+        call: "📞 Call",
+        whatsapp: "💬 WhatsApp",
+        email: "✉️ Email"
+      },
+      ta: {
+        title: "திருவண்ணாமலை ரியல் எஸ்டேட்",
+        welcome: "திருவண்ணாமலை ரியல் எஸ்டேட்டிற்கு வரவேற்கிறோம்",
+        description: "விற்பனைக்கும் வாடகைக்கும் சிறந்த சொத்துகள் கிடைக்கின்றன.",
+        contact: "எங்களை தொடர்புகொள்ள",
+        call: "📞 அழைக்க",
+        whatsapp: "💬 வாட்ஸ்அப்",
+        email: "✉️ மின்னஞ்சல்"
+      },
+      te: {
+        title: "తిరువన్నామలై రియల్ ఎస్టేట్",
+        welcome: "తిరువన్నామలై రియల్ ఎస్టేట్‌కి స్వాగతం",
+        description: "అమ్మకానికి మరియు అద్దెకు ఉత్తమ ఆస్తులు లభ్యమవుతాయి.",
+        contact: "మమ్మల్ని సంప్రదించండి",
+        call: "📞 కాల్",
+        whatsapp: "💬 వాట్సాప్",
+        email: "✉️ ఇమెయిల్"
+      },
+      hi: {
+        title: "तिरुवन्नामलाई रियल एस्टेट",
+        welcome: "तिरुवन्नामलाई रियल एस्टेट में आपका स्वागत है",
+        description: "बिक्री और किराये के लिए सर्वोत्तम संपत्तियां उपलब्ध हैं।",
+        contact: "हमसे संपर्क करें",
+        call: "📞 कॉल",
+        whatsapp: "💬 व्हाट्सएप",
+        email: "✉️ ईमेल"
+      },
+      kn: {
+        title: "ತಿರುವಣ್ಣಾಮಲೈ ರಿಯಲ್ ಎಸ್ಟೇಟ್",
+        welcome: "ತಿರುವಣ್ಣಾಮಲೈ ರಿಯಲ್ ಎಸ್ಟೇಟ್‌ಗೆ ಸ್ವಾಗತ",
+        description: "ಮಾರಾಟ ಮತ್ತು ಬಾಡಿಗೆಗೆ ಉತ್ತಮ ಆಸ್ತಿಗಳು ಲಭ್ಯವಿವೆ.",
+        contact: "ನಮ್ಮನ್ನು ಸಂಪರ್ಕಿಸಿ",
+        call: "📞 ಕರೆ",
+        whatsapp: "💬 ವಾಟ್ಸಪ್",
+        email: "✉️ ಇಮೇಲ್"
+      }
+    };
+
+    const langSelector = document.getElementById("language");
+    langSelector.addEventListener("change", (e) => {
+      const lang = e.target.value;
+      document.getElementById("title").textContent = translations[lang].title;
+      document.getElementById("welcome").textContent = translations[lang].welcome;
+      document.getElementById("description").textContent = translations[lang].description;
+      document.getElementById("contact").textContent = translations[lang].contact;
+      document.getElementById("call").textContent = translations[lang].call;
+      document.getElementById("whatsapp").textContent = translations[lang].whatsapp;
+      document.getElementById("email").textContent = translations[lang].email;
+    });
+  </script>
+</body>
+</html>
